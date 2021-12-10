@@ -51,7 +51,7 @@ class NewsRepository(
         }
     }
 
-    /** Fetches news from the network and saves them if fetching succeed. */
+    /** Fetches news from the network and saves them if fetching succeeds. */
     private suspend fun fetchAndSaveNews(activeNewsPageIndex: Int): Result<NewsPageInfo> {
         Log.i(TAG, "Fetching news")
 
@@ -79,7 +79,7 @@ class NewsRepository(
     private suspend fun saveNews(listOfNews: List<News>) {
         //todo add paging
         withContext(Dispatchers.IO + Job()) {
-            // saving all news its costly memory wise and also its hard to organize them properly,
+            // saving all news it`s costly memory wise and also it`s hard to organize them properly,
             // so for now only last page of news is saved
             dataBase.newsDao().deleteAllNews()
             dataBase.newsDao().insertNews(*listOfNews.toTypedArray())

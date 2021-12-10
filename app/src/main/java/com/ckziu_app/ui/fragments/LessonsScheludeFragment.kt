@@ -10,20 +10,16 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ckziu_app.model.Failure
-import com.ckziu_app.model.InProgress
-import com.ckziu_app.model.Success
 import com.ckziu_app.di.RepositoryProvider
-import com.ckziu_app.model.Lesson
-import com.ckziu_app.model.ScheduleForDay
+import com.ckziu_app.model.*
+import com.ckziu_app.ui.adapters.LessonsViewAdapter
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
-import com.ckziu_app.ui.adapters.LessonsViewAdapter
+import com.ckziu_app.ui.viewmodels.*
+import com.ckziu_app.ui.viewmodels.factories.LessonScheduleViewModelFactory
 import com.ckziu_app.utils.hideKeyboard
 import com.ckziu_app.utils.makeGone
 import com.ckziu_app.utils.makeVisible
-import com.ckziu_app.ui.viewmodels.*
-import com.ckziu_app.ui.viewmodels.factories.LessonScheduleViewModelFactory
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.FragmentLessonsScheduleBinding
 import kotlinx.coroutines.Dispatchers
@@ -188,6 +184,7 @@ class LessonsScheduleFragment :
     override fun onPause() {
         super.onPause()
         saveSearchTarget()
+        spinnerController?.destroy()
     }
 
     /** Saves target`s name. */
@@ -243,10 +240,5 @@ class LessonsScheduleFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        spinnerController?.destroy()
     }
 }

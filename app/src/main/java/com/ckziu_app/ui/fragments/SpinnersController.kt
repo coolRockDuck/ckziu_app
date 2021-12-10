@@ -1,5 +1,6 @@
 package com.ckziu_app.ui.fragments
 
+import android.util.Log
 import android.widget.ArrayAdapter
 import com.ckziu_app.data.network.LessonScheduleGetter
 import com.ckziu_app.model.NamesOfTargets
@@ -27,11 +28,17 @@ internal class SpinnersController(
     savedType: Type = Type.GROUP_NAMES,
     savedName: String = "",
 ) {
+
     companion object {
-        private val listOfID =
-            listOf(R.string.class_of_studnets, R.string.teacher, R.string.classroom)
+        const val TAG = "SpinnersController"
 
         val DEFAULT_PERSPECTIVE = LessonScheduleGetter.PerspectiveMode.GROUP
+
+        private val listOfID = listOf(
+            R.string.class_of_studnets,
+            R.string.teacher,
+            R.string.classroom
+        )
     }
 
     private var viewBinding: FragmentLessonsScheduleBinding? = lessonFragment?.viewBinding
@@ -150,6 +157,7 @@ internal class SpinnersController(
 
     /** Removing [lessonFragment] reference to prevent memory leaks*/
     internal fun destroy() {
+        Log.d(TAG, "Destroying spinner controller")
         lessonFragment = null
         viewBinding = null
     }
