@@ -1,0 +1,90 @@
+<resources>
+
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!--COLORS-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSurface">@color/colorPrimary</item>
+        <item name="colorPrimarySurface">@color/colorPrimaryDark</item>
+
+        <!--CARDS-->
+        <item name="materialCardViewStyle">@style/CardStyle</item>
+        <item name="cardViewStyle">@style/CardStyle</item>
+
+        <!--TEXT_APPEARANCE-->
+        <item name="titleTextAppearance">@style/TitleAppearance</item>
+        <item name="textAppearanceHeadline1">@style/HeadlineTextAppearance</item>
+        <item name="textAppearanceHeadline2">@style/Headline2TextAppearance</item>
+        <item name="textAppearanceBody1">@style/AppTheme.TextAppearanceBody1</item>
+        <item name="textAppearanceBody2">@style/AppTheme.TextAppearanceBody2</item>
+        <item name="textAppearanceSmallPopupMenu">@style/SpinnerItemTextAppearance</item>
+
+        <item name="actionBarStyle">
+            @style/Widget.MaterialComponents.ActionBar.PrimarySurface.ActionbarTheme
+        </item>
+        <!--OTHERS-->
+        <item name="bottomNavigationStyle">@style/BottomNavBarStyle</item>
+
+    </style>
+
+    <!--Light version of app theme-->
+    <style name="Theme.AppTheme" parent="Base.AppTheme">
+        <item name="colorBackgroundFloating">@color/colorColorBackgroundFloating.LightTheme</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnPrimarySurface">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+
+        <item name="lessonCellColorBrightest">@color/colorCellBrightest.LightTheme</item>
+        <item name="lessonCellColorBright">@color/colorCellBright.LightTheme</item>
+        <item name="lessonCellColorDark">@color/colorCellDark.LightTheme</item>
+        <item name="lessonCellColorDarkest">@color/colorCellDarkest.LightTheme</item>
+        <item name="imageLoadingDrawable">@drawable/ic_loading_placeholder_light</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.ActionBar.PrimarySurface.ActionbarTheme">
+        <item name="titleTextAppearance">@style/TitleAppearance</item>
+        <item name="actionBarSize">40dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnPrimarySurface">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorTertiary">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+    <style name="BottomNavBarStyle" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="itemFillColor">@color/white</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+        <!-- setting itemBackground turns off ripple effect occurring when clicking on item          -->
+        <item name="itemBackground">@color/colorPrimary</item>
+        <item name="labelVisibilityMode">selected</item>
+    </style>
+
+
+    <style name="Base.CardView.CardStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="textAppearanceHeadline1">@style/CardTitle</item>
+        <item name="textAppearanceHeadline2">@style/CardStyle.CreationDateTextAppearance</item>
+        <item name="textAppearanceBody2">@style/CardMainText</item>
+    </style>
+
+    <style name="CardStyle" parent="Base.CardView.CardStyle">
+        <item name="cardBackgroundColor">?android:colorBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <item name="colorPrimary">@color/white</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="android:editTextColor">@color/white</item>
+    </style>
+</resources>

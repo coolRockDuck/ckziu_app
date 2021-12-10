@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CkziuApp</string>
+    <string name="main_page_name">Strona głowna</string>
+    <string name="news_page_name">Aktualności</string>
+    <string name="lessons_schedule">Plan lekcji</string>
+    <string name="oldstyle_lessons_schedule_name">Stara wersja planu lecji</string>
+    <string name="class_register_name">Dziennik</string>
+    <string name="num_of_students">Liczba uczniów</string>
+    <string name="num_best_studnets">Liczba olimpijczyków</string>
+    <string name="num_teachers">Liczba nauczycieli</string>
+    <string name="num_years_experience">Lata doświadczenia</string>
+    <string name="no_internet_mainpage">Aplikacja nie może załadować strony głównej.</string>
+    <string name="no_interent_newspage">Aplikacja nie może załadować aktualności.</string>
+    <string name="no_interent_day_schedule">Aplikacja nie może załadować planu lekcji.</string>
+    <string name="tap_to_try_again">Spróbuj ponownie</string>
+    <string name="day_monday">Poniedziałek</string>
+    <string name="day_tuesday">Wtorek</string>
+    <string name="day_wednesday">Środa</string>
+    <string name="day_thursday">Czawrtek</string>
+    <string name="day_saturday">Sobota</string>
+    <string name="day_friday">Piątek</string>
+    <string name="day_sunday">Niedziela</string>
+    <string name="teacher">Nauczyciel</string>
+    <string name="classroom">Sala</string>
+    <string name="duration">Czas trwania</string>
+    <string name="lesson_index">Numer lekcji</string>
+    <string name="class_of_studnets">Klasa</string>
+    <string name="type">Rodzaj</string>
+    <string name="search_for">Szukaj</string>
+</resources>

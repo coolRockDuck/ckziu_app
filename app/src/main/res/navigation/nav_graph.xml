@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainPageFragment">
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.ckziu_app.ui.fragments.NewsListFragment"
+        android:label="@string/news_page_name"
+        tools:layout="@layout/fragment_newslist">
+        <action
+            android:id="@+id/action_mainFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainPageFragment"
+        android:name="com.ckziu_app.ui.fragments.MainPageFragment"
+        android:label="@string/main_page_name"
+        tools:layout="@layout/fragment_mainpage">
+        <action
+            android:id="@+id/action_mainPageFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_lessonsScheduleFragment"
+            app:destination="@id/lessonsScheduleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lessonsScheduleFragment"
+        android:name="com.ckziu_app.ui.fragments.LessonsScheduleFragment"
+        android:label="@string/lessons_schedule"
+        tools:layout="@layout/fragment_lessons_schedule" />
+
+
+    <fragment
+        android:id="@+id/newsDetailsFragment"
+        android:name="com.ckziu_app.ui.fragments.NewsDetailsFragment"
+        android:label="NewsDetailsFragment"
+        tools:layout="@layout/fragment_news_detail">
+    </fragment>
+
+</navigation>

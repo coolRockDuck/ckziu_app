@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/cell_day_name_1"
+        layout="@layout/lesson_cell_layout" />
+
+    <include
+        android:id="@+id/cell_day_name_2"
+        layout="@layout/lesson_cell_layout" />
+
+    <include
+        android:id="@+id/cell_day_name_3"
+        layout="@layout/lesson_cell_layout" />
+
+    <include
+        android:id="@+id/cell_day_name_4"
+        layout="@layout/lesson_cell_layout" />
+
+    <include
+        android:id="@+id/cell_day_name_5"
+        layout="@layout/lesson_cell_layout" />
+
+</LinearLayout>

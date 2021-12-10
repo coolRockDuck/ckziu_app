@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--    TODO test on smaller devices android:layout_marginStart and android:layout_marginEnd="20dp"-->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="@dimen/length_of_divider"
+        android:layout_height="@dimen/height_of_divider"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:background="?colorAccent" />
+</FrameLayout>

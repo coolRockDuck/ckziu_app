@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#001A39</color>
+    <color name="colorPrimaryDark">#00132a</color>
+    <color name="colorAccent">#EC0600</color>
+
+    <color name="titleTextColor">@color/textColor1</color>
+    <color name="body1TextColor">@color/textColor1</color>
+    <color name="body2TextColor">@color/textColor2</color>
+
+    <!--cell colors -->
+    <color name="colorCellBrightest.LightTheme">#E4E4E4</color>
+    <color name="colorCellBright.LightTheme">#D9D9D9</color>
+    <color name="colorCellDark.LightTheme">#D0D0D0</color>
+    <color name="colorCellDarkest.LightTheme">#AFAFAF</color>
+
+    <color name="colorCellBrightest.DarkTheme">#373737</color>
+    <color name="colorCellBright.DarkTheme">#2C2C2C</color>
+    <color name="colorCellDark.DarkTheme">#212121</color>
+    <color name="colorCellDarkest.DarkTheme">#161616</color>
+
+    <color name="colorColorBackgroundFloating.LightTheme">#E6E6E6</color>
+
+    <color name="white">#FFF</color>
+    <color name="black">#000000</color>
+    <!--    text Color-->
+    <color name="textColor1">#FFFF</color>
+    <color name="textColor2">#9CFFFFFF</color>
+</resources>

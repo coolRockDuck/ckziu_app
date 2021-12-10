@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <style name="Theme.AppTheme" parent="Base.AppTheme">
+        <item name="colorOnSurface">#FFFF</item>
+        <item name="colorOnPrimarySurface">#FFFF</item>
+        <item name="android:textColor">#FFFF</item>
+        <item name="android:textColorPrimary">#FFFF</item>
+        <item name="colorBackgroundFloating">#1F1F1F</item>
+
+        <item name="lessonCellColorBrightest">@color/colorCellBrightest.DarkTheme</item>
+        <item name="lessonCellColorBright">@color/colorCellBright.DarkTheme</item>
+        <item name="lessonCellColorDark">@color/colorCellDark.DarkTheme</item>
+        <item name="lessonCellColorDarkest">@color/colorCellDarkest.DarkTheme</item>
+        <item name="imageLoadingDrawable">@drawable/ic_loading_placeholder_dark</item>
+    </style>
+
+    <style name="CardStyle" parent="Base.CardView.CardStyle">
+        <item name="cardBackgroundColor">?colorBackgroundFloating</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>

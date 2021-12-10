@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_subjectName"
+        style="?textAppearanceHeadline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Graphical design" />
+
+    <include
+        android:id="@+id/divider_accent"
+        layout="@layout/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_lessonDetails_subjectName" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middle_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_index"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/lesson_index"
+        app:layout_constraintEnd_toStartOf="@+id/middle_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_accent" />
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/duration"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lessonDetails_index"
+        app:layout_constraintStart_toStartOf="@+id/tv_lessonDetails_index"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lessonDetails_index" />
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/class_of_studnets"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lessonDetails_time"
+        app:layout_constraintStart_toStartOf="@+id/tv_lessonDetails_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lessonDetails_time" />
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_teacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/teacher"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lessonDetails_group"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_lessonDetails_group"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lessonDetails_group" />
+
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_classroom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/classroom"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lessonDetails_teacher"
+        app:layout_constraintStart_toStartOf="@+id/tv_lessonDetails_teacher"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lessonDetails_teacher" />
+
+    <!--Second half-->
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_indexNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lessonDetails_index"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/middle_divider"
+        app:layout_constraintTop_toTopOf="@+id/tv_lessonDetails_index"
+        tools:text="2" />
+
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_timeInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lessonDetails_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/middle_divider"
+        app:layout_constraintTop_toTopOf="@+id/tv_lessonDetails_time"
+        tools:text="11:45 - 12:25" />
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_teacherName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lessonDetails_teacher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/middle_divider"
+        app:layout_constraintTop_toTopOf="@+id/tv_lessonDetails_teacher"
+        tools:text="Jan Kowaslki" />
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_classroomName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lessonDetails_classroom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/middle_divider"
+        app:layout_constraintTop_toTopOf="@+id/tv_lessonDetails_classroom"
+        tools:text="58" />
+
+
+    <TextView
+        android:id="@+id/tv_lessonDetails_groupName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lessonDetails_group"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lessonDetails_timeInfo"
+        app:layout_constraintStart_toStartOf="@+id/tv_lessonDetails_timeInfo"
+        app:layout_constraintTop_toTopOf="@+id/tv_lessonDetails_group"
+        tools:text="4C" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

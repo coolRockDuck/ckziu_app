@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_oldverion_lessons_schedule"
+        android:icon="@drawable/ic_previous_lessons_schedule"
+        android:title="@string/oldstyle_lessons_schedule_name" />
+    <item
+        android:id="@+id/item_classregister"
+        android:icon="@drawable/ic_class_register"
+        android:title="@string/class_register_name" />
+    <item
+        android:id="@+id/item_bip"
+        android:icon="@drawable/ic_bip"
+        android:title="@string/bip_name" />
+</menu>

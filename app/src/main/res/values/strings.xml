@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">CkziuApp</string>
+    <string name="main_page_name">Main Page</string>
+    <string name="news_page_name">News</string>
+    <string name="lessons_schedule">Lessons schedule</string>
+    <string name="oldstyle_lessons_schedule_name">Old version of lessons schedule</string>
+    <string name="class_register_name">Class register</string>
+    <string name="bip_name" translatable="false">bip</string>
+    <string name="num_of_students">Number of students</string>
+    <string name="num_best_studnets">Number of best students</string>
+    <string name="num_teachers">Number of teachers</string>
+    <string name="num_years_experience">Years of experience</string>
+    <string name="no_internet_mainpage">App can\'t load main page.</string>
+    <string name="no_interent_newspage">App can\'t load news.</string>
+    <string name="no_interent_day_schedule">"App can't schedule plan for this day. "</string>
+    <string name="tap_to_try_again">Tap to try again</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_sunday">Sunday</string>
+    <string name="teacher">Teacher</string>
+    <string name="classroom">Classroom</string>
+    <string name="duration">Duration</string>
+    <string name="lesson_index">Lesson index</string>
+    <string name="class_of_studnets">Class</string>
+    <string name="type">Type</string>
+    <string name="search_for">Search for</string>
+</resources>

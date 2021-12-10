@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleAppearance" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/noto_sans_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="HeadlineTextAppearance" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/pt_serif</item>
+    </style>
+
+    <style name="AppTheme.TextAppearanceBody1" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">17sp</item>
+        <item name="fontFamily">@font/pt_sans</item>
+    </style>
+
+    <style name="AppTheme.TextAppearanceBody2" parent="TextAppearance.AppCompat.Body2">
+        <item name="fontFamily">@font/pt_sans</item>
+    </style>
+
+    <!--CARD TEXT APPEARANCE-->
+    <style name="CardTitle" parent="HeadlineTextAppearance">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CardStyle.CreationDateTextAppearance" parent="AppTheme.TextAppearanceBody2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/body1TextColor</item>
+    </style>
+
+    <style name="CardMainText" parent="AppTheme.TextAppearanceBody2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Headline2TextAppearance" parent="HeadlineTextAppearance">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="SpinnerItemTextAppearance" parent="AppTheme.TextAppearanceBody1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Headline2TextAppearance.Dense" parent="Headline2TextAppearance">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+</resources>
