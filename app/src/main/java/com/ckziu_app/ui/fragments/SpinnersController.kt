@@ -54,7 +54,6 @@ internal class SpinnersController(
     init {
         populate(savedType, savedName)
         setListeners()
-        initialSearch()
     }
 
     private fun getListOfProperType(): List<String> {
@@ -89,36 +88,14 @@ internal class SpinnersController(
 
                     else -> throw UnsupportedOperationException("")
                 }
+            }
 
-                atvLessonsScheduleTargetSearcher.setOnItemClickListener { adapterView, _, position, _ ->
-                    val selectedItem = adapterView.adapter.getItem(position) as String
-                    lessonFragment?.changeTarget(selectedItem)
-                }
+            atvLessonsScheduleTargetSearcher.setOnItemClickListener { adapterView, _, position, _ ->
+                val selectedItem = adapterView.adapter.getItem(position) as String
+                lessonFragment?.changeTarget(selectedItem)
             }
         }
     }
-
-    /**  Launches initial search for saved targetName if it`s valid
-     *  or start searching for the first name from the list of targets */
-    private fun initialSearch() {
-        viewBinding?.run {
-            val adapter = atvLessonsScheduleTargetSearcher.adapter
-            var containsValidTargetName = false
-            for (index in 0 until adapter.count) {
-                val item = adapter.getItem(index)
-                if (item == atvLessonsScheduleTargetSearcher.text.toString()) {
-                    lessonFragment?.changeTarget(item.toString())
-                    containsValidTargetName = true
-                    break
-                }
-            }
-
-            if (!containsValidTargetName) { // if targetName is NOT valid then search for first item
-                lessonFragment?.changeTarget(adapter.getItem(0).toString())
-            }
-        }
-    }
-
 
     private fun populate(type: Type = Type.GROUP_NAMES, targetName: String = "") {
 
@@ -164,5 +141,5 @@ internal class SpinnersController(
 }
 
 enum class Type {
-    GROUP_NAMES, TEACHERS_NAMES, CLASSROOM_NAMES;
+    GROUP_NAMES, TEACHERS_NAMES, CLASSROOM_NAMES
 }

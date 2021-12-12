@@ -11,12 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.ckziu_app.model.News
 import com.ckziu_app.model.Result
 import com.ckziu_app.model.Success
-import com.ckziu_app.model.News
 import com.ckziu_app.ui.fragments.NewsListFragment
-import com.ckziu_app.utils.makeGone
 import com.ckziu_app.ui.viewmodels.NewsViewModel
+import com.ckziu_app.utils.makeGone
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.CardNewsBinding
 import com.example.ckziuapp.databinding.PageIndexLayoutBinding
@@ -147,7 +147,7 @@ class NewsAdapter(
                 textView.setTextColor(tvActivePage.textColors)
                 tvActivePage.setTextColor(normalTextColor)
 
-                viewModel.changeActivePageIndex(chosenPageIndex)
+                viewModel.changePageAndFetchNews(chosenPageIndex)
             }
 
 

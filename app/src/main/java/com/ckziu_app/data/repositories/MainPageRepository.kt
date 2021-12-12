@@ -1,11 +1,7 @@
 package com.ckziu_app.data.repositories
 
-import com.ckziu_app.model.Failure
-import com.ckziu_app.model.InProgress
-import com.ckziu_app.model.Result
-import com.ckziu_app.model.Success
 import com.ckziu_app.data.network.MainPageInfoGetter
-import com.ckziu_app.model.MainPageInfo
+import com.ckziu_app.model.*
 import kotlinx.coroutines.flow.flow
 
 /** Repository managing informations regarding main page
@@ -26,5 +22,5 @@ class MainPageRepository(private val mainPageInfoGetter: MainPageInfoGetter) {
                 }
             }
         }
-}
+    }
 

@@ -37,8 +37,10 @@ class NewsViewModel constructor(
     val activeNewsPageIndex: LiveData<Int> = _activeNewsPageIndex
 
     init {
-        _activeNewsPageIndex.value = loadLastActivePageIndex()
+        changeActivePageIndex(loadLastActivePageIndex())
+        refreshNewsList()
     }
+
 
     private fun setActivePageIndex(newIndex: Int) {
         if (maxPageIndex.value!! !is Success) {
@@ -79,13 +81,12 @@ class NewsViewModel constructor(
         )
     }
 
-
     private fun changePageAndReloadNews(newPageIndex: Int) {
         setActivePageIndex(newPageIndex)
         refreshNewsList()
     }
 
-    fun changeActivePageIndex(newIndex: Int) {
+    private fun changeActivePageIndex(newIndex: Int) {
         setActivePageIndex(newIndex)
     }
 

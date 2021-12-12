@@ -9,13 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.ckziu_app.model.Failure
-import com.ckziu_app.model.InProgress
-import com.ckziu_app.model.Success
 import com.ckziu_app.di.RepositoryProvider
-import com.ckziu_app.model.MainPageInfo
-import com.ckziu_app.model.News
-import com.ckziu_app.model.PromoNumbers
+import com.ckziu_app.model.*
 import com.ckziu_app.ui.adapters.MiniNewsRecViewAdapter
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
@@ -65,10 +60,6 @@ class MainPageFragment : Fragment(R.layout.fragment_mainpage), ScrollControllerI
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.collectMainPageInfo()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -185,20 +176,21 @@ class MainPageFragment : Fragment(R.layout.fragment_mainpage), ScrollControllerI
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewBinding = null
-    }
-
     private fun hideProgressBar() {
-        viewBinding.pbMainpage.makeGone()
+        // viewBinding could be equal to null at this point so safe call is necessary
+        _viewBinding?.pbMainpage.makeGone()
     }
 
     private fun showProgressBar() {
-        viewBinding.pbMainpage.makeVisible()
+        _viewBinding?.pbMainpage.makeVisible()
     }
 
     override fun scrollToTheTop() {
         viewBinding.svTopScrollMainpage.smoothScrollTo(0, 0)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
     }
 }

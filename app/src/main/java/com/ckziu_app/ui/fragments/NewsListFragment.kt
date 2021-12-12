@@ -154,7 +154,6 @@ class NewsListFragment : Fragment(R.layout.fragment_newslist), ScrollControllerI
             }
 
             viewModel.activeNewsPageIndex.observe(viewLifecycleOwner) {
-                viewModel.refreshNewsList()
                 viewBinding.newsRv.adapter?.let { adapter ->
                     (adapter as NewsAdapter).notifyItemChanged(adapter.itemCount)
                 }

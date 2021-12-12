@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ckziu_app.model.Failure
 import com.ckziu_app.data.repositories.MainPageRepository
-import com.ckziu_app.model.Result
+import com.ckziu_app.model.Failure
 import com.ckziu_app.model.MainPageInfo
+import com.ckziu_app.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +28,11 @@ class MainPageViewModel(
     private val _mainPageInfo = MutableLiveData<Result<MainPageInfo>>()
     val mainPageInfo: LiveData<Result<MainPageInfo>> = _mainPageInfo
 
-    fun collectMainPageInfo() {
+    init {
+        collectMainPageInfo()
+    }
+
+    private fun collectMainPageInfo() {
         viewModelScope.launch {
             repository.flowOfMainPageInfo()
                 .flowOn(ioDispatcher)

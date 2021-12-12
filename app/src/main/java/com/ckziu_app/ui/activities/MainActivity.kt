@@ -14,14 +14,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.ckziu_app.data.local.NewsDataBase
+import com.ckziu_app.data.network.LessonScheduleGetter
+import com.ckziu_app.data.network.MainPageInfoGetter
+import com.ckziu_app.data.network.NewsGetter
 import com.ckziu_app.data.repositories.LessonsScheduleRepository
 import com.ckziu_app.data.repositories.MainPageRepository
 import com.ckziu_app.data.repositories.NewsRepository
 import com.ckziu_app.di.RepositoryProvider
 import com.ckziu_app.di.RepositoryProviderImpl
-import com.ckziu_app.data.network.LessonScheduleGetter
-import com.ckziu_app.data.network.MainPageInfoGetter
-import com.ckziu_app.data.network.NewsGetter
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
 import com.ckziu_app.ui.helpers.SnackbarController
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), ErrorInformant, RepositoryProvider {
         viewBinding.run {
             navigationView.setNavigationItemSelectedListener { item ->
                 val url = when (item.itemId) {
-                    R.id.item_oldverion_lessons_schedule -> "http://ckziu.olawa.pl/planlekcji/index.html" // todo move this to resources
+                    R.id.item_oldverion_lessons_schedule -> "http://ckziu.olawa.pl/planlekcji/index.html"
                     R.id.item_classregister -> "https://uonetplus.vulcan.net.pl/powiatolawski/"
                     R.id.item_bip -> "http://www.ckziuolawa.szkolnybip.pl/"
                     else -> {

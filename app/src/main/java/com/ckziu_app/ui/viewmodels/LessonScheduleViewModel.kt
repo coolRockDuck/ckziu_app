@@ -5,14 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ckziu_app.model.NamesOfTargets
-import com.ckziu_app.model.Failure
 import com.ckziu_app.data.repositories.LessonsScheduleRepository
-import com.ckziu_app.model.Result
-import com.ckziu_app.model.Lesson
-import com.ckziu_app.model.ScheduleForDay
+import com.ckziu_app.model.*
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class LessonsScheduleViewModel(
@@ -24,6 +22,15 @@ class LessonsScheduleViewModel(
         const val TAG = "LessonsScheduleVM"
     }
 
+    init {
+        collectScheduleTargets().invokeOnCompletion {
+            listOfScheduleTargets.value?.ifSuccessThen { success ->
+                collectLessonsSchedule(success.resultValue.groupNames[0])
+            }
+        }
+    }
+
+
     /** List of [days][ScheduleForDay] which every one of which contains [Lesson].*/
     private val _scheduleForWeek = MutableLiveData<Result<List<ScheduleForDay>>>()
     val scheduleForWeek: LiveData<Result<List<ScheduleForDay>>> = _scheduleForWeek
@@ -32,11 +39,11 @@ class LessonsScheduleViewModel(
     val listOfScheduleTargets: LiveData<Result<NamesOfTargets>> = _listOfScheduleTargets
 
     fun updateTargetsAndSchedule(targetName: String) = viewModelScope.launch {
-        collectUpdateScheduleTargets()
+        collectScheduleTargets()
         collectLessonsSchedule(targetName)
     }
 
-    fun collectUpdateScheduleTargets() = viewModelScope.launch {
+    private fun collectScheduleTargets() = viewModelScope.launch {
         repository.flowOfTargets()
             .flowOn(ioDispatcher)
             .catch { e ->

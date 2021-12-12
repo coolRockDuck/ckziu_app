@@ -2,7 +2,6 @@ package com.ckziu_app.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,13 +51,6 @@ class LessonsScheduleFragment :
                 ctx.getScheduleRepo(),
                 Dispatchers.IO
             )
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (viewModel.listOfScheduleTargets.value == null) {
-            viewModel.collectUpdateScheduleTargets()
         }
     }
 
@@ -159,8 +151,6 @@ class LessonsScheduleFragment :
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-
-            Log.d("Plan = ", scheduleForWeek[4].lessons.toString())
 
             adapter = LessonsViewAdapter(scheduleForWeek, this@LessonsScheduleFragment)
         }

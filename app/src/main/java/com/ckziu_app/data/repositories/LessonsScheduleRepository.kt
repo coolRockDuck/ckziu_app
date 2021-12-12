@@ -1,13 +1,8 @@
 package com.ckziu_app.data.repositories
 
 import android.util.Log
-import com.ckziu_app.model.Failure
-import com.ckziu_app.model.InProgress
-import com.ckziu_app.model.Result
-import com.ckziu_app.model.Success
 import com.ckziu_app.data.network.LessonScheduleGetter
-import com.ckziu_app.model.NamesOfTargets
-import com.ckziu_app.model.ScheduleForDay
+import com.ckziu_app.model.*
 import kotlinx.coroutines.flow.flow
 
 /** Repository managing informations regarding lessons schedule
@@ -22,7 +17,6 @@ class LessonsScheduleRepository(private val networkLessonScheduleGetter: LessonS
     suspend fun flowOfLessonsSchedule(
         targetNameGroup: String, listOfTargetsName: Result<NamesOfTargets>
     ) = flow<Result<List<ScheduleForDay>>> {
-
         emit(InProgress())
         Log.d(TAG, "updateSchedule: updating lesson schedule")
 
@@ -56,5 +50,4 @@ class LessonsScheduleRepository(private val networkLessonScheduleGetter: LessonS
             }
         }
     }
-
 }
