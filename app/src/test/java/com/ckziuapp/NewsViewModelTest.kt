@@ -2,34 +2,31 @@ package com.ckziuapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.ckziu_app.model.InProgress
-import com.ckziu_app.model.Result
-import com.ckziu_app.model.Success
 import com.ckziu_app.data.repositories.NewsRepository
-import com.ckziu_app.model.News
-import com.ckziu_app.model.NewsPageInfo
+import com.ckziu_app.model.*
 import com.ckziu_app.ui.viewmodels.NewsViewModel
 import com.ckziu_app.ui.viewmodels.factories.NewsViewModelFactory
+import com.google.common.truth.Truth.assertThat
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.capture
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import getTestSuccessValue
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.ArgumentCaptor
+import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import com.nhaarman.mockitokotlin2.any
 
 @RunWith(JUnit4::class)
 @ExperimentalCoroutinesApi
@@ -53,6 +50,16 @@ class NewsViewModelTest {
     @Mock
     lateinit var observerActiveNews: Observer<Result<List<News>>>
 
+
+    @Captor
+    private lateinit var argCaptorActivePageIndex: ArgumentCaptor<Int>
+
+    @Captor
+    private lateinit var argCaptorMaxPageIndex: ArgumentCaptor<Result<Int>>
+
+    @Captor
+    private lateinit var argCaptorActiveNews: ArgumentCaptor<Result<List<News>>>
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
@@ -73,21 +80,35 @@ class NewsViewModelTest {
     }
 
     @Test
-    fun givenNewsPageInfo_whenReloadNews_shouldReturnTheSameValues() = runBlockingTest() {
-        val inProgress = InProgress<NewsPageInfo>()
+    fun givenNewsPageInfo_whenReloadNews_shouldReturnTheSameValues() = runBlockingTest {
         val emptyList = emptyList<News>()
-        val success = Success(NewsPageInfo(emptyList, 20))
-        whenever(repo.reloadNews(anyInt())).thenReturn(flow {
-            emit(inProgress)
-            emit(success)
-        })
+        val maxPageIndex = 20
+        whenever(repo.reloadNews(anyInt())).thenReturn(
+            flow {
+                emit(InProgress())
+                delay(2000)
+                emit(Success(NewsPageInfo(emptyList, maxPageIndex)))
+            }
+        )
 
         newsViewModel.refreshNewsList()
 
-        assertTrue(newsViewModel.activePageNews.value is Success)
-        assertEquals(emptyList, newsViewModel.activePageNews.getTestSuccessValue())
-        assertEquals(20, newsViewModel.maxPageIndex.getTestSuccessValue())
-//        assertEquals(20, (newsViewModel.maxPageIndex.value as Success).resultValue)
+        verify(observerMaxPage, times(2)).onChanged(capture(argCaptorMaxPageIndex))
+        verify(observerActiveNews, times(2)).onChanged(capture(argCaptorActiveNews))
+
+        assertThat(argCaptorMaxPageIndex.value).isInstanceOf(InProgress::class.java)
+        assertThat(argCaptorActiveNews.value).isInstanceOf(InProgress::class.java)
+
+        testDispatcher.advanceTimeBy(2000)
+
+        verify(observerMaxPage, times(3)).onChanged(capture(argCaptorMaxPageIndex))
+        verify(observerActiveNews, times(3)).onChanged(capture(argCaptorActiveNews))
+
+        assertThat(argCaptorMaxPageIndex.value).isInstanceOf(Success::class.java)
+        assertThat((argCaptorMaxPageIndex.value as Success).resultValue).isEqualTo(maxPageIndex)
+
+        assertThat(argCaptorActiveNews.value).isInstanceOf(Success::class.java)
+        assertThat((argCaptorActiveNews.value as Success).resultValue).isEqualTo(emptyList)
     }
 
 
@@ -99,26 +120,45 @@ class NewsViewModelTest {
         }
 
         val emptyNews = News.createEmptyNews()
+
         newsViewModel.loadArticleHtml(emptyNews)
 
         assertEquals("MY HTML", emptyNews.articleHtml)
     }
 
     @Test
-    fun some() = runBlockingTest {
+    fun changePageAndFetchNews_whenRepoReturnsNewsPageInfo_shouldUpdateNewsAndChangePage() = runBlockingTest {
         val emptyListOfNews = emptyList<News>()
         val newPageIndex = 4
-        whenever(repo.reloadNews(anyInt())).thenReturn(flow {
-            emit(InProgress())
-            emit(Success(NewsPageInfo(emptyListOfNews, 20)))
-        })
+        val maxPageIndex = 20
 
         whenever(repo.loadMaxPageIndex()).thenReturn(20)
 
+        whenever(repo.reloadNews(anyInt())).thenReturn(flow {
+            emit(InProgress())
+            delay(2000)
+            emit(Success(NewsPageInfo(emptyListOfNews, maxPageIndex)))
+        })
+
         newsViewModel.changePageAndFetchNews(newPageIndex)
 
-        assertEquals(emptyListOfNews, newsViewModel.activePageNews.getTestSuccessValue())
-        assertEquals(20, newsViewModel.maxPageIndex.getTestSuccessValue())
-    }
+        verify(observerMaxPage, times(2)).onChanged(capture(argCaptorMaxPageIndex))
+        verify(observerActiveNews, times(2)).onChanged(capture(argCaptorActiveNews))
+        verify(observerActivePageIndex, times(2)).onChanged(capture(argCaptorActivePageIndex))
 
+
+        assertThat(argCaptorMaxPageIndex.value).isInstanceOf(InProgress::class.java)
+        assertThat(argCaptorActiveNews.value).isInstanceOf(InProgress::class.java)
+
+        testDispatcher.advanceTimeBy(2000)
+
+        verify(observerMaxPage, times(3)).onChanged(capture(argCaptorMaxPageIndex))
+        verify(observerActiveNews, times(3)).onChanged(capture(argCaptorActiveNews))
+
+        assertThat(argCaptorActivePageIndex.value).isEqualTo(newPageIndex)
+        assertThat(argCaptorMaxPageIndex.value).isInstanceOf(Success::class.java)
+        assertThat(argCaptorActiveNews.value).isInstanceOf(Success::class.java)
+        assertThat((argCaptorMaxPageIndex.value as Success).resultValue).isEqualTo(maxPageIndex)
+        assertThat((argCaptorActiveNews.value as Success).resultValue).isEqualTo(emptyListOfNews)
+    }
 }

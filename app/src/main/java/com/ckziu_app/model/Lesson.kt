@@ -2,6 +2,7 @@ package com.ckziu_app.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import org.jetbrains.annotations.TestOnly
 
 /** Class that holds info about one lesson field.
  *  Firstly check [schedule of lessons](http://ckziu.olawa.pl/planlekcji/index.html) for better understanding.
@@ -25,10 +26,27 @@ data class Lesson(
     val teachersNames: List<String>,
     val classRooms: List<String>,
 ) : Parcelable {
+    companion object {
+        @TestOnly
+        fun emptyLesson() = Lesson(
+            0,
+            emptyList(),
+            "",
+            emptyList(),
+            emptyList(),
+            emptyList()
+        )
+    }
+
     /** Returns true if more than one subgroups participates in the lesson.*/
     fun isSplitted() = subjects.size >= 2
     /** [com.ckziu_app.ui.fragments.LessonDetailsBottomSheet.populateView] relays strongly on this */
 }
 
 /** Wrapper class for holding lessons for one day.*/
-data class ScheduleForDay(val lessons: MutableList<Lesson> = mutableListOf())
+data class ScheduleForDay(val lessons: MutableList<Lesson> = mutableListOf()) {
+    companion object {
+        @TestOnly
+        fun emptyScheduleForDay() = ScheduleForDay(emptyList<Lesson>().toMutableList())
+    }
+}

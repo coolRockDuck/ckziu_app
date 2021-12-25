@@ -32,7 +32,7 @@ class MainPageViewModel(
         collectMainPageInfo()
     }
 
-    private fun collectMainPageInfo() {
+    fun collectMainPageInfo() {
         viewModelScope.launch {
             repository.flowOfMainPageInfo()
                 .flowOn(ioDispatcher)
@@ -44,7 +44,7 @@ class MainPageViewModel(
                     emit(Failure(error = e))
                 }
                 .collectLatest {
-                    _mainPageInfo.value = it
+                        _mainPageInfo.value = it
                 }
         }
     }

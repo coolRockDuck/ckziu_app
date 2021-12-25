@@ -22,6 +22,14 @@ class LessonsScheduleViewModel(
         const val TAG = "LessonsScheduleVM"
     }
 
+    /** List of [days][ScheduleForDay] which every one of which contains [Lesson].*/
+    private val _scheduleForWeek = MutableLiveData<Result<List<ScheduleForDay>>>()
+    val scheduleForWeek: LiveData<Result<List<ScheduleForDay>>> = _scheduleForWeek
+
+    private val _listOfScheduleTargets = MutableLiveData<Result<NamesOfTargets>>()
+    val listOfScheduleTargets: LiveData<Result<NamesOfTargets>> = _listOfScheduleTargets
+
+
     init {
         collectScheduleTargets().invokeOnCompletion {
             listOfScheduleTargets.value?.ifSuccessThen { success ->
@@ -30,20 +38,12 @@ class LessonsScheduleViewModel(
         }
     }
 
-
-    /** List of [days][ScheduleForDay] which every one of which contains [Lesson].*/
-    private val _scheduleForWeek = MutableLiveData<Result<List<ScheduleForDay>>>()
-    val scheduleForWeek: LiveData<Result<List<ScheduleForDay>>> = _scheduleForWeek
-
-    private val _listOfScheduleTargets = MutableLiveData<Result<NamesOfTargets>>()
-    val listOfScheduleTargets: LiveData<Result<NamesOfTargets>> = _listOfScheduleTargets
-
     fun updateTargetsAndSchedule(targetName: String) = viewModelScope.launch {
         collectScheduleTargets()
         collectLessonsSchedule(targetName)
     }
 
-    private fun collectScheduleTargets() = viewModelScope.launch {
+    fun collectScheduleTargets() = viewModelScope.launch {
         repository.flowOfTargets()
             .flowOn(ioDispatcher)
             .catch { e ->
