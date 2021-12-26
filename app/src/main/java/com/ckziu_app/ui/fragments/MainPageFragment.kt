@@ -38,25 +38,26 @@ class MainPageFragment : Fragment(R.layout.fragment_mainpage), ScrollControllerI
 
     private lateinit var errorInformant: ErrorInformant
 
-    private val viewModel by viewModels <MainPageViewModel> {
-        requireContext().let { ctx ->
-            when (ctx) {
-                !is RepositoryProvider -> {
-                    throw IllegalStateException("Activity needs to implement RepositoryProvider")
-                }
-                else -> {
-                    MainPageViewModelFactory(ctx.getMainPageRepo(), Dispatchers.IO)
-                }
-            }
-        }
+    private val viewModel by viewModels<MainPageViewModel> {
+        MainPageViewModelFactory(
+            (requireContext().applicationContext as RepositoryProvider).getMainPageRepo(),
+            Dispatchers.IO
+        )
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context !is ErrorInformant) {
-            throw IllegalStateException("Activity needs to implement ErrorInformant")
-        } else {
-            errorInformant = context
+
+        when {
+            context.applicationContext !is RepositoryProvider -> {
+                throw IllegalStateException("Application needs to implement RepositoryProvider")
+            }
+            context!is ErrorInformant -> {
+                throw IllegalStateException("Activity needs to implement ErrorInformant")
+            }
+            else -> {
+                errorInformant = context
+            }
         }
     }
 

@@ -42,27 +42,20 @@ class LessonsScheduleFragment :
     val viewBinding get() = _viewBinding!!
 
     private val viewModel by activityViewModels<LessonsScheduleViewModel> {
-        requireContext().let { ctx ->
-            if (ctx !is RepositoryProvider) {
-                throw IllegalStateException("Activity needs to implement RepositoryProvider")
-            }
-
-            LessonScheduleViewModelFactory(
-                ctx.getScheduleRepo(),
-                Dispatchers.IO
-            )
-        }
+        LessonScheduleViewModelFactory(
+            (requireContext().applicationContext as RepositoryProvider).getScheduleRepo(),
+            Dispatchers.IO
+        )
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        when (context) {
-            !is RepositoryProvider -> {
-                throw IllegalStateException("Activity needs to implement RepositoryProvider")
+        when {
+            context.applicationContext !is RepositoryProvider -> {
+                throw IllegalStateException("Application needs to implement RepositoryProvider")
             }
 
-            !is ErrorInformant -> {
+            context !is ErrorInformant -> {
                 throw IllegalStateException("Activity needs to implement ErrorInformant")
             }
 

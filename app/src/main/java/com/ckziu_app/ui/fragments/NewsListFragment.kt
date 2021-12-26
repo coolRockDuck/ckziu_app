@@ -42,23 +42,28 @@ class NewsListFragment : Fragment(R.layout.fragment_newslist), ScrollControllerI
     private val viewBinding get() = _viewBinding!!
 
     val viewModel by viewModels<NewsViewModel> {
-        requireContext().let { ctx ->
-            if (ctx !is RepositoryProvider) {
-                throw IllegalStateException("Activity needs to implement RepositoryProvider")
-            }
-
-            NewsViewModelFactory(ctx.getNewsRepo(), Dispatchers.IO)
-        }
+        NewsViewModelFactory(
+            (requireContext().applicationContext as RepositoryProvider).getNewsRepo(),
+            Dispatchers.IO
+        )
     }
 
     private lateinit var errorInformant: ErrorInformant
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context !is ErrorInformant) {
-            throw IllegalStateException("Activity needs to implement ErrorInformant")
-        } else {
-            errorInformant = context
+        when {
+            context.applicationContext !is RepositoryProvider -> {
+                throw IllegalStateException("Activity needs to implement RepositoryProvider")
+            }
+
+            context !is ErrorInformant -> {
+                throw IllegalStateException("Activity needs to implement ErrorInformant")
+            }
+
+            else -> {
+                errorInformant = context
+            }
         }
     }
 

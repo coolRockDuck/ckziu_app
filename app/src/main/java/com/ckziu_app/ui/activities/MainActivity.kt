@@ -13,15 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.ckziu_app.data.local.NewsDataBase
-import com.ckziu_app.data.network.LessonScheduleGetter
-import com.ckziu_app.data.network.MainPageInfoGetter
-import com.ckziu_app.data.network.NewsGetter
-import com.ckziu_app.data.repositories.LessonsScheduleRepository
-import com.ckziu_app.data.repositories.MainPageRepository
-import com.ckziu_app.data.repositories.NewsRepository
-import com.ckziu_app.di.RepositoryProvider
-import com.ckziu_app.di.RepositoryProviderImpl
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
 import com.ckziu_app.ui.helpers.SnackbarController
@@ -37,7 +28,7 @@ import kotlinx.coroutines.launch
  *
  * Implements [ErrorInformant] in order to be able to display error information
  * coming from the fragments. */
-class MainActivity : AppCompatActivity(), ErrorInformant, RepositoryProvider {
+class MainActivity : AppCompatActivity(), ErrorInformant {
 
     companion object {
         const val TAG = "MainActivity"
@@ -46,16 +37,11 @@ class MainActivity : AppCompatActivity(), ErrorInformant, RepositoryProvider {
 
     private lateinit var viewBinding: ActivityMainBinding
 
-    /** This object is needed in order to manually injects
-     * repositories. */
-    private val repositoryProviderImpl = RepositoryProviderImpl()
-
     /** Instance of the class which helps with displaying error to the user.
      * @see ErrorInformant */
     private val snackbarController = SnackbarController(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initDI()
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(viewBinding.root)
@@ -94,7 +80,7 @@ class MainActivity : AppCompatActivity(), ErrorInformant, RepositoryProvider {
             }
 
             toolbar.materialToolbar.setOnClickListener {
-                viewBinding.root.open() // open navigation drawer
+                viewBinding.root.open() // opens navigation drawer
             }
 
             setSupportActionBar(toolbar.materialToolbar)
@@ -169,31 +155,6 @@ class MainActivity : AppCompatActivity(), ErrorInformant, RepositoryProvider {
         }
     }
 
-    /** Creates all dependencies.
-     * @see RepositoryProvider*/
-    private fun initDI() {
-        repositoryProviderImpl.run {
-            createMainPageRepo(MainPageInfoGetter())
-            createNewsRepo(
-                applicationContext,
-                NewsGetter(),
-                NewsDataBase.getInstance(applicationContext)
-            )
-            createScheduleRepo(LessonScheduleGetter())
-        }
-    }
-
-    override fun getMainPageRepo(): MainPageRepository {
-        return repositoryProviderImpl.mainPageRepository
-    }
-
-    override fun getNewsRepo(): NewsRepository {
-        return repositoryProviderImpl.newsRepository
-    }
-
-    override fun getScheduleRepo(): LessonsScheduleRepository {
-        return repositoryProviderImpl.lessonsScheduleRepository
-    }
 
     override fun onDestroy() {
         snackbarController.destroySnackbarController() // preventing memory leaks
