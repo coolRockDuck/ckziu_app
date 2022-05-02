@@ -14,9 +14,10 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
+import javax.inject.Inject
 
 /** Class which fetches information about lessons schedule.*/
-class LessonScheduleGetter() {
+class LessonScheduleGetter @Inject constructor() {
     companion object {
         private const val baseLink: String = "http://ckziu.olawa.pl/planlekcji"
         private const val TAG = "LessonScheduleGetter"

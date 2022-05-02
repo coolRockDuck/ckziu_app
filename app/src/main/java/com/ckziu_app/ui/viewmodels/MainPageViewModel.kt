@@ -9,13 +9,16 @@ import com.ckziu_app.data.repositories.MainPageRepository
 import com.ckziu_app.model.Failure
 import com.ckziu_app.model.MainPageInfo
 import com.ckziu_app.model.Result
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainPageViewModel(
+@HiltViewModel
+class MainPageViewModel @Inject constructor(
     private val repository: MainPageRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -30,6 +33,7 @@ class MainPageViewModel(
 
     init {
         collectMainPageInfo()
+        Log.d(TAG, "creating main page view model")
     }
 
     fun collectMainPageInfo() {

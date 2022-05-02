@@ -5,26 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ckziu_app.di.RepositoryProvider
 import com.ckziu_app.model.*
 import com.ckziu_app.ui.adapters.LessonsViewAdapter
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
 import com.ckziu_app.ui.viewmodels.*
-import com.ckziu_app.ui.viewmodels.factories.LessonScheduleViewModelFactory
 import com.ckziu_app.utils.hideKeyboard
 import com.ckziu_app.utils.makeGone
 import com.ckziu_app.utils.makeVisible
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.FragmentLessonsScheduleBinding
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 
 /** Fragment presenting time table consisting of multiple [com.ckziu_app.model.News] of chosen target.
  * @see com.ckziu_app.ui.activities.MainActivity*/
+@AndroidEntryPoint
 class LessonsScheduleFragment :
     Fragment(R.layout.fragment_lessons_schedule),
     ScrollControllerInterface,
@@ -41,24 +39,14 @@ class LessonsScheduleFragment :
     private var _viewBinding: FragmentLessonsScheduleBinding? = null
     val viewBinding get() = _viewBinding!!
 
-    private val viewModel by activityViewModels<LessonsScheduleViewModel> {
-        LessonScheduleViewModelFactory(
-            (requireContext().applicationContext as RepositoryProvider).getScheduleRepo(),
-            Dispatchers.IO
-        )
-    }
+    private val viewModel by viewModels<LessonsScheduleViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        when {
-            context.applicationContext !is RepositoryProvider -> {
-                throw IllegalStateException("Application needs to implement RepositoryProvider")
-            }
-
-            context !is ErrorInformant -> {
+        when (context) {
+            !is ErrorInformant -> {
                 throw IllegalStateException("Activity needs to implement ErrorInformant")
             }
-
             else -> {
                 errorInformant = context
             }

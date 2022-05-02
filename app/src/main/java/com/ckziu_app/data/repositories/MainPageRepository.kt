@@ -3,10 +3,11 @@ package com.ckziu_app.data.repositories
 import com.ckziu_app.data.network.MainPageInfoGetter
 import com.ckziu_app.model.*
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 /** Repository managing informations regarding main page
  * @see com.ckziu_app.model.MainPageInfo*/
-class MainPageRepository(private val mainPageInfoGetter: MainPageInfoGetter) {
+class MainPageRepository @Inject constructor(private val mainPageInfoGetter: MainPageInfoGetter) {
 
     /** Returns flow of informations about main page. */
     suspend fun flowOfMainPageInfo() =

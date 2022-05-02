@@ -21,6 +21,7 @@ import com.ckziu_app.utils.makeGone
 import com.ckziu_app.utils.makeVisible
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
  *
  * Implements [ErrorInformant] in order to be able to display error information
  * coming from the fragments. */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), ErrorInformant {
 
     companion object {

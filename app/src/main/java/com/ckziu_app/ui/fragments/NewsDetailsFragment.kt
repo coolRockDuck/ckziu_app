@@ -16,19 +16,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebSettingsCompat.FORCE_DARK_ON
 import androidx.webkit.WebViewFeature
-import com.ckziu_app.di.RepositoryProvider
 import com.ckziu_app.model.News
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.viewmodels.NewsViewModel
-import com.ckziu_app.ui.viewmodels.factories.NewsViewModelFactory
 import com.ckziu_app.utils.makeGone
 import com.ckziu_app.utils.makeVisible
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.FragmentNewsDetailBinding
 import com.google.android.material.transition.MaterialContainerTransform
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 
 /** Fragment showing detailed information about chosen [News] */
+@AndroidEntryPoint
 class NewsDetailsFragment : Fragment(R.layout.fragment_news_detail) {
 
     companion object {
@@ -38,12 +37,7 @@ class NewsDetailsFragment : Fragment(R.layout.fragment_news_detail) {
     private var _viewBinding: FragmentNewsDetailBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private val viewModel by viewModels<NewsViewModel> {
-        NewsViewModelFactory(
-            (requireContext().applicationContext as RepositoryProvider).getNewsRepo(),
-            Dispatchers.IO
-        )
-    }
+    private val viewModel by viewModels<NewsViewModel>()
 
     /** News of which details should be displayed*/
     private lateinit var chosenNews: News
@@ -56,12 +50,8 @@ class NewsDetailsFragment : Fragment(R.layout.fragment_news_detail) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        when {
-            context.applicationContext !is RepositoryProvider -> {
-                throw IllegalStateException("Activity needs to implement RepositoryProvider")
-            }
-
-            context !is ErrorInformant -> {
+        when (context) {
+            !is ErrorInformant -> {
                 throw IllegalStateException("Activity needs to implement ErrorInformant")
             }
             else -> {
