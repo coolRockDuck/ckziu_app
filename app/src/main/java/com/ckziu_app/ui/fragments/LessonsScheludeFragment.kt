@@ -197,7 +197,7 @@ class LessonsScheduleFragment :
     private fun getSavedTargetInfo(): Pair<Type, String> {
         requireActivity().getPreferences(Context.MODE_PRIVATE).run {
             val savedName = getString(PREFERENCES_TARGET_NAME_KEY, null) ?: ""
-            val defValue = Type.CLASSROOM_NAMES.ordinal
+            val defValue = Type.GROUP_NAMES.ordinal
             val savedTypeOrdinal = getInt(PREFERENCES_TARGET_TYPE_KEY, defValue)
             val type = Type.values()[savedTypeOrdinal]
             return type to savedName

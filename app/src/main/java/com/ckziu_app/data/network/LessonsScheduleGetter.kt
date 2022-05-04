@@ -7,7 +7,6 @@ import com.ckziu_app.model.NamesOfTargets
 import com.ckziu_app.model.Lesson
 import com.ckziu_app.model.ScheduleForDay
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -60,7 +59,6 @@ class LessonScheduleGetter() {
 
                 val mainSite = Jsoup.connect(baseLink + "/" + "lista.html").timeout(TIMEOUT).get()
                 val tabElements = mainSite.getElementsByTag("a")
-
                 val targetLink = getTargetLink(tabElements, targetName)
                 val targetWebsite = Jsoup.connect(targetLink).timeout(TIMEOUT).get()
 
@@ -191,35 +189,33 @@ class LessonScheduleGetter() {
 
         return withContext(Dispatchers.IO) {
             try {
+                var properList: MutableList<String>
                 val doc = Jsoup.connect(baseLink + "/" + "lista.html").timeout(7500).get()
-                val docWithouthHeaders = doc.getElementsByTag("body").first()
 
-                var properList = groupsNames
-                docWithouthHeaders.allElements.forEach { ele ->
-                    when (ele.tagName()) {
+                // this element consists of multiple tables
+                val table = doc.getElementsByTag("table").first()
 
-                        // switching group of the links
-                        "h4" -> properList = when (ele.text()) {
-                            "Oddziały" -> groupsNames
+                // choosing correct list by checking id of cells blocks of the table
+                table.getElementsByTag("div").forEach { ele ->
+                    properList = when (val id = ele.attr("id")) {
+                        "oddzialy" -> groupsNames
+                        "nauczyciele" -> teachersNames
+                        "sale" -> classroomsNames
 
-                            "Nauczyciele" -> teachersNames
+                        else -> throw  UnsupportedOperationException(
+                            "Unsupported type of elements, id = $id"
+                        )
+                    }
 
-                            "Sale" -> classroomsNames
-
-                            else -> {
-                                val error =
-                                    UnsupportedOperationException("Unsupported type of links")
-                                Log.w(TAG, "getLessonGroupsNames: ", error)
-                                throw error
-                            }
-                        }
-
-                        "a" -> properList.add(ele.text()) // adding link to proper group
+                    ele.getElementsByTag("a").forEach { subElement ->
+                        val text = subElement.text()
+                        properList.add(text)
                     }
                 }
 
                 NamesOfTargets(groupsNames, teachersNames, classroomsNames)
             } catch (e: Exception) {
+                Log.e(TAG, "getTargetsNames: error", e)
                 null
             }
         }
