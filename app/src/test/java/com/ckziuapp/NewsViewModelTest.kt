@@ -5,30 +5,36 @@ import androidx.lifecycle.Observer
 import com.ckziu_app.data.repositories.NewsRepository
 import com.ckziu_app.model.*
 import com.ckziu_app.ui.viewmodels.NewsViewModel
-import com.ckziu_app.ui.viewmodels.factories.NewsViewModelFactory
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyInt
+import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(JUnit4::class)
+@RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class NewsViewModelTest {
 
@@ -64,13 +70,11 @@ class NewsViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
-        newsViewModel =
-            NewsViewModelFactory(repo, testDispatcher).create(NewsViewModel::class.java).apply {
-                activePageNews.observeForever(observerActiveNews)
-                maxPageIndex.observeForever(observerMaxPage)
-                activeNewsPageIndex.observeForever(observerActivePageIndex)
-            }
-
+        newsViewModel = NewsViewModel(repo, testDispatcher).apply {
+            activePageNews.observeForever(observerActiveNews)
+            maxPageIndex.observeForever(observerMaxPage)
+            activeNewsPageIndex.observeForever(observerActivePageIndex)
+        }
     }
 
     @After
@@ -127,38 +131,37 @@ class NewsViewModelTest {
     }
 
     @Test
-    fun changePageAndFetchNews_whenRepoReturnsNewsPageInfo_shouldUpdateNewsAndChangePage() = runBlockingTest {
-        val emptyListOfNews = emptyList<News>()
-        val newPageIndex = 4
-        val maxPageIndex = 20
+    fun changePageAndFetchNews_whenRepoReturnsNewsPageInfo_shouldUpdateNewsAndChangePage() =
+        runBlockingTest {
+            val emptyListOfNews = emptyList<News>()
+            val newPageIndex = 4
+            val maxPageIndex = 20
 
-        whenever(repo.loadMaxPageIndex()).thenReturn(20)
+            whenever(repo.reloadNews(anyInt())).thenReturn(flow {
+                emit(InProgress())
+                delay(2000)
+                emit(Success(NewsPageInfo(emptyListOfNews, maxPageIndex)))
+            })
 
-        whenever(repo.reloadNews(anyInt())).thenReturn(flow {
-            emit(InProgress())
-            delay(2000)
-            emit(Success(NewsPageInfo(emptyListOfNews, maxPageIndex)))
-        })
+            newsViewModel.changePageAndFetchNews(newPageIndex)
 
-        newsViewModel.changePageAndFetchNews(newPageIndex)
-
-        verify(observerMaxPage, times(2)).onChanged(capture(argCaptorMaxPageIndex))
-        verify(observerActiveNews, times(2)).onChanged(capture(argCaptorActiveNews))
-        verify(observerActivePageIndex, times(2)).onChanged(capture(argCaptorActivePageIndex))
+            verify(observerMaxPage, times(2)).onChanged(capture(argCaptorMaxPageIndex))
+            verify(observerActiveNews, times(2)).onChanged(capture(argCaptorActiveNews))
+            verify(observerActivePageIndex, times(2)).onChanged(capture(argCaptorActivePageIndex))
 
 
-        assertThat(argCaptorMaxPageIndex.value).isInstanceOf(InProgress::class.java)
-        assertThat(argCaptorActiveNews.value).isInstanceOf(InProgress::class.java)
+            assertThat(argCaptorMaxPageIndex.value).isInstanceOf(InProgress::class.java)
+            assertThat(argCaptorActiveNews.value).isInstanceOf(InProgress::class.java)
 
-        testDispatcher.advanceTimeBy(2000)
+            testDispatcher.advanceTimeBy(2000)
 
-        verify(observerMaxPage, times(3)).onChanged(capture(argCaptorMaxPageIndex))
-        verify(observerActiveNews, times(3)).onChanged(capture(argCaptorActiveNews))
+            verify(observerMaxPage, times(3)).onChanged(capture(argCaptorMaxPageIndex))
+            verify(observerActiveNews, times(3)).onChanged(capture(argCaptorActiveNews))
 
-        assertThat(argCaptorActivePageIndex.value).isEqualTo(newPageIndex)
-        assertThat(argCaptorMaxPageIndex.value).isInstanceOf(Success::class.java)
-        assertThat(argCaptorActiveNews.value).isInstanceOf(Success::class.java)
-        assertThat((argCaptorMaxPageIndex.value as Success).resultValue).isEqualTo(maxPageIndex)
-        assertThat((argCaptorActiveNews.value as Success).resultValue).isEqualTo(emptyListOfNews)
-    }
+            assertThat(argCaptorActivePageIndex.value).isEqualTo(newPageIndex)
+            assertThat(argCaptorMaxPageIndex.value).isInstanceOf(Success::class.java)
+            assertThat(argCaptorActiveNews.value).isInstanceOf(Success::class.java)
+            assertThat((argCaptorMaxPageIndex.value as Success).resultValue).isEqualTo(maxPageIndex)
+            assertThat((argCaptorActiveNews.value as Success).resultValue).isEqualTo(emptyListOfNews)
+        }
 }

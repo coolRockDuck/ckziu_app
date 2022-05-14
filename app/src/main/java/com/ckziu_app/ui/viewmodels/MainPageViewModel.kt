@@ -33,7 +33,6 @@ class MainPageViewModel @Inject constructor(
 
     init {
         collectMainPageInfo()
-        Log.d(TAG, "creating main page view model")
     }
 
     fun collectMainPageInfo() {

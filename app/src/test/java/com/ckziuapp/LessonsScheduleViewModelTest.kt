@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.ckziu_app.data.repositories.LessonsScheduleRepository
 import com.ckziu_app.model.*
 import com.ckziu_app.ui.viewmodels.LessonsScheduleViewModel
-import com.ckziu_app.ui.viewmodels.factories.LessonScheduleViewModelFactory
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.capture
@@ -60,10 +59,10 @@ class LessonsScheduleViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
-        viewModel = LessonScheduleViewModelFactory(
+        viewModel = LessonsScheduleViewModel(
             repo,
             testDispatcher
-        ).create(LessonsScheduleViewModel::class.java).apply {
+        ).apply {
             listOfScheduleTargets.observeForever(observerNamesOfTargets)
             scheduleForWeek.observeForever(observerSchedulesForDays)
         }

@@ -88,7 +88,6 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-
     // AndroidJUnitRunner and JUnit Rules
     def androidx_test_version = "1.3.0"
     androidTestImplementation "androidx.test:runner:$androidx_test_version"

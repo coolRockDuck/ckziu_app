@@ -5,12 +5,8 @@ import androidx.lifecycle.Observer
 import com.ckziu_app.data.repositories.MainPageRepository
 import com.ckziu_app.model.*
 import com.ckziu_app.ui.viewmodels.MainPageViewModel
-import com.ckziu_app.ui.viewmodels.factories.MainPageViewModelFactory
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.capture
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -53,10 +49,10 @@ class MainPageViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testCoroutineDispatcher)
-        viewModel = MainPageViewModelFactory(
+        viewModel = MainPageViewModel(
             repo,
             testCoroutineDispatcher
-        ).create(MainPageViewModel::class.java).apply {
+        ).apply {
             mainPageInfo.observeForever(observer)
         }
     }
