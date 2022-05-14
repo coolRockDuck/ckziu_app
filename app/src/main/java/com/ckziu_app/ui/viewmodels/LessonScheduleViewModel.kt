@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ckziu_app.data.repositories.LessonsScheduleRepository
 import com.ckziu_app.model.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LessonsScheduleViewModel(
+@HiltViewModel
+class LessonsScheduleViewModel @Inject constructor(
     private val repository: LessonsScheduleRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {

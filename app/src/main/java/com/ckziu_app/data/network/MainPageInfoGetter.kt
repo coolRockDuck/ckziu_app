@@ -9,11 +9,12 @@ import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import javax.inject.Inject
 
 /** Class which fetches information about the main page.
  *
  * @see MainPageInfo*/
-class MainPageInfoGetter {
+class MainPageInfoGetter @Inject constructor() {
 
     companion object {
         private const val TAG = "MainPageInfoGetter"
@@ -41,7 +42,7 @@ class MainPageInfoGetter {
 
     private fun parseMainPageInfo(doc: Document): MainPageInfo {
         val columnsOfElements =
-            getElementsInColumns(doc) // all elements we want are splitted in 4 columns
+            getElementsInColumns(doc) // all important elements are splitted in 4 columns
 
         val promoPhotosLinks = getPromoPhotoLinks(columnsOfElements[0])
         val title = getTitle(columnsOfElements[1])

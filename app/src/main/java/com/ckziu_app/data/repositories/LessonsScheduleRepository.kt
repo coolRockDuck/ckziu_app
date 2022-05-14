@@ -4,10 +4,11 @@ import android.util.Log
 import com.ckziu_app.data.network.LessonScheduleGetter
 import com.ckziu_app.model.*
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 /** Repository managing informations regarding lessons schedule
  * @see com.ckziu_app.model.Lesson*/
-class LessonsScheduleRepository(private val networkLessonScheduleGetter: LessonScheduleGetter) {
+class LessonsScheduleRepository @Inject constructor(private val networkLessonScheduleGetter: LessonScheduleGetter) {
 
     companion object {
         const val TAG = "LessonsScheduleRepo"

@@ -8,10 +8,11 @@ import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import javax.inject.Inject
 
 /** Singleton that is scraping info about news from schools
  *  [website](http://ckziu.olawa.pl/aktualnosci/).*/
-class NewsGetter {
+class NewsGetter @Inject constructor() {
 
     companion object {
         private const val TIMEOUT_MILS = 7_500

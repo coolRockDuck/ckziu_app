@@ -9,24 +9,23 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.ckziu_app.di.RepositoryProvider
 import com.ckziu_app.model.*
 import com.ckziu_app.ui.adapters.MiniNewsRecViewAdapter
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
 import com.ckziu_app.ui.viewmodels.MainPageViewModel
-import com.ckziu_app.ui.viewmodels.factories.MainPageViewModelFactory
 import com.ckziu_app.utils.makeGone
 import com.ckziu_app.utils.makeVisible
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.FragmentMainpageBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** Fragment displaying information about main page from school`s [website](http://ckziu.olawa.pl/) */
+@AndroidEntryPoint
 class MainPageFragment : Fragment(R.layout.fragment_mainpage), ScrollControllerInterface {
 
     companion object {
@@ -38,21 +37,12 @@ class MainPageFragment : Fragment(R.layout.fragment_mainpage), ScrollControllerI
 
     private lateinit var errorInformant: ErrorInformant
 
-    private val viewModel by viewModels<MainPageViewModel> {
-        MainPageViewModelFactory(
-            (requireContext().applicationContext as RepositoryProvider).getMainPageRepo(),
-            Dispatchers.IO
-        )
-    }
+    private val viewModel by viewModels<MainPageViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        when {
-            context.applicationContext !is RepositoryProvider -> {
-                throw IllegalStateException("Application needs to implement RepositoryProvider")
-            }
-            context!is ErrorInformant -> {
+        when (context) {
+            !is ErrorInformant -> {
                 throw IllegalStateException("Activity needs to implement ErrorInformant")
             }
             else -> {

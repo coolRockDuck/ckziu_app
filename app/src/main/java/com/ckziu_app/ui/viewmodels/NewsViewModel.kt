@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ckziu_app.data.repositories.NewsRepository
 import com.ckziu_app.model.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsViewModel constructor(
+@HiltViewModel
+class NewsViewModel @Inject constructor(
     private val repository: NewsRepository,
     private val IoDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -40,7 +43,6 @@ class NewsViewModel constructor(
         changeActivePageIndex(loadLastActivePageIndex())
         refreshNewsList()
     }
-
 
     private fun setActivePageIndex(newIndex: Int) {
         if (maxPageIndex.value!! !is Success) {

@@ -8,8 +8,10 @@ import com.ckziu_app.data.network.NewsGetter
 import com.ckziu_app.model.*
 import com.ckziu_app.ui.activities.MainActivity
 import com.ckziu_app.ui.fragments.NewsListFragment
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 /** Repository managing informations regarding news
@@ -17,8 +19,8 @@ import kotlin.coroutines.coroutineContext
  * @see com.ckziu_app.model.News
  * */
 
-class NewsRepository(
-    private val applicationContext: Context,
+class NewsRepository @Inject constructor(
+    @ApplicationContext private val applicationContext: Context,
     private val newsGetter: NewsGetter,
     private val dataBase: NewsDataBase
 ) {
