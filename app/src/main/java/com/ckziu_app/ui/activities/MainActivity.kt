@@ -100,15 +100,15 @@ class MainActivity : AppCompatActivity(), ErrorInformant {
     private fun prepareBottomNavBar(navController: NavController) {
         viewBinding.run {
             bottomNavbar.setupWithNavController(navController)
-            bottomNavbar.setOnNavigationItemSelectedListener { selectedItem ->
-
+            bottomNavbar.setOnItemSelectedListener { selectedItem ->
                 // if destination which is already selected is selected again, fragment should be scrolled to the top
                 if (selectedItem.itemId == navController.currentDestination?.id) {
 
-                    val navHostFragment =
-                        supportFragmentManager.findFragmentById(R.id.fragment_nav_host)!!
-                    val activeFragment =
-                        navHostFragment.childFragmentManager.primaryNavigationFragment
+                    val activeFragment = supportFragmentManager
+                        .findFragmentById(R.id.fragment_nav_host)!!
+                        .let { navHostFragment ->
+                            navHostFragment.childFragmentManager.primaryNavigationFragment
+                        }
 
                     /** see docs of [ScrollControllerInterface] and [ScrollControllerInterface.scrollToTheTop]*/
                     if (activeFragment !is ScrollControllerInterface) {
@@ -119,12 +119,12 @@ class MainActivity : AppCompatActivity(), ErrorInformant {
                         (activeFragment).scrollToTheTop()
                     }
 
-                    return@setOnNavigationItemSelectedListener false
+                    return@setOnItemSelectedListener false
                 }
 
                 navController.navigate(selectedItem.itemId)
 
-                return@setOnNavigationItemSelectedListener true
+                return@setOnItemSelectedListener true
             }
         }
     }
