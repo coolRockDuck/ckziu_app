@@ -6,7 +6,6 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 32
-    buildToolsVersion "30.0.3"
 
     kotlinOptions {
         jvmTarget = 1.8
@@ -19,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.ckziuapp"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
@@ -103,5 +102,5 @@ dependencies {
     //Others
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
