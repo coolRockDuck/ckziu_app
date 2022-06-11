@@ -8,7 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.*
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,14 +17,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
 import com.ckziu_app.ui.helpers.SnackbarController
-import com.ckziu_app.ui.viewmodels.*
-import com.ckziu_app.utils.makeGone
-import com.ckziu_app.utils.makeVisible
 import com.example.ckziuapp.R
 import com.example.ckziuapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /** Main activity of the application.
  *
@@ -44,12 +40,14 @@ class MainActivity : AppCompatActivity(), ErrorInformant {
     private val snackbarController = SnackbarController(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
+
         viewBinding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(viewBinding.root)
 
         prepareNavigationUI()
-        showSplashScreen()
     }
 
     /** Configures action bar and bottom navigation bar */
@@ -138,7 +136,6 @@ class MainActivity : AppCompatActivity(), ErrorInformant {
         snackbarController.showSnackbar(lifecycleOwner, errorMsg, actionMsg, actionClickListener)
     }
 
-
     override fun hideErrorSnackbar() {
         snackbarController.hideSnackbar()
     }
@@ -146,17 +143,6 @@ class MainActivity : AppCompatActivity(), ErrorInformant {
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.fragment_nav_host).navigateUp() || super.onSupportNavigateUp()
     }
-
-    private fun showSplashScreen() {
-        viewBinding.run {
-            lifecycleScope.launch {
-                splashScreen.makeVisible()
-                delay(1_000)
-                splashScreen.makeGone()
-            }
-        }
-    }
-
 
     override fun onDestroy() {
         snackbarController.destroySnackbarController() // preventing memory leaks

@@ -24,6 +24,7 @@
         <item name="actionBarStyle">
             @style/Widget.MaterialComponents.ActionBar.PrimarySurface.ActionbarTheme
         </item>
+
         <!--OTHERS-->
         <item name="bottomNavigationStyle">@style/BottomNavBarStyle</item>
 
@@ -86,5 +87,12 @@
         <item name="colorPrimary">@color/white</item>
         <item name="hintTextColor">@color/white</item>
         <item name="android:editTextColor">@color/white</item>
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorPrimaryDark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ckziu_launcher_foreground</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/Theme.AppTheme</item>
     </style>
 </resources>

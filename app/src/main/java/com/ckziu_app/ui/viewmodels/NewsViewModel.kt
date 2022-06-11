@@ -30,6 +30,7 @@ class NewsViewModel @Inject constructor(
     private val _activePageNews = MutableLiveData<Result<List<News>>>()
     val activePageNews: LiveData<Result<List<News>>> = _activePageNews
 
+    // todo locate rare bug when _maxPageIndex is set to 1 - possible race condition
     /** Number of news pages. */
     private val _maxPageIndex = MutableLiveData<Result<Int>>(Success(1))
     val maxPageIndex: LiveData<Result<Int>> = _maxPageIndex
