@@ -58,7 +58,7 @@ class LessonsScheduleFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _viewBinding = FragmentLessonsScheduleBinding.inflate(layoutInflater, container, false)
+        _viewBinding = FragmentLessonsScheduleBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 
