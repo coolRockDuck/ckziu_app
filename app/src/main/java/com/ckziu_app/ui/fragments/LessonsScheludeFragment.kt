@@ -12,7 +12,7 @@ import com.ckziu_app.model.*
 import com.ckziu_app.ui.adapters.LessonsViewAdapter
 import com.ckziu_app.ui.helpers.ErrorInformant
 import com.ckziu_app.ui.helpers.ScrollControllerInterface
-import com.ckziu_app.ui.viewmodels.*
+import com.ckziu_app.ui.viewmodels.LessonsScheduleViewModel
 import com.ckziu_app.utils.hideKeyboard
 import com.ckziu_app.utils.makeGone
 import com.ckziu_app.utils.makeVisible
@@ -23,8 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /** Fragment presenting time table consisting of multiple [com.ckziu_app.model.News] of chosen target.
  * @see com.ckziu_app.ui.activities.MainActivity*/
 @AndroidEntryPoint
-class LessonsScheduleFragment :
-    Fragment(R.layout.fragment_lessons_schedule),
+class LessonsScheduleFragment : Fragment(),
     ScrollControllerInterface,
     LessonsViewAdapter.LessonDetailsDisplay {
 

@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 /** Fragment displaying information about main page from school`s [website](http://ckziu.olawa.pl/) */
 @AndroidEntryPoint
-class MainPageFragment : Fragment(R.layout.fragment_mainpage), ScrollControllerInterface {
+class MainPageFragment : Fragment(), ScrollControllerInterface {
 
     companion object {
         const val TAG = "MainPageFragment"

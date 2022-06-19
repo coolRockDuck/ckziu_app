@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /** Fragment showing detailed information about chosen [News] */
 @AndroidEntryPoint
-class NewsDetailsFragment : Fragment(R.layout.fragment_news_detail) {
+class NewsDetailsFragment : Fragment() {
 
     companion object {
         const val TAG = "NewsDetailsFragment"
