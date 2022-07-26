@@ -10,10 +10,12 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /** Class which fetches information about the main page.
  *
  * @see MainPageInfo*/
+@Singleton
 class MainPageInfoGetter @Inject constructor() {
 
     companion object {

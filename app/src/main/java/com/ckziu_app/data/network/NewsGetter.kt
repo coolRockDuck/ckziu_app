@@ -9,9 +9,11 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /** Singleton that is scraping info about news from schools
  *  [website](http://ckziu.olawa.pl/aktualnosci/).*/
+@Singleton
 class NewsGetter @Inject constructor() {
 
     companion object {

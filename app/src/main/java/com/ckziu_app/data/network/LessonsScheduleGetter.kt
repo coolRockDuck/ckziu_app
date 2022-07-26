@@ -14,8 +14,10 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /** Class which fetches information about lessons schedule.*/
+@Singleton
 class LessonScheduleGetter @Inject constructor() {
     companion object {
         private const val baseLink: String = "http://ckziu.olawa.pl/planlekcji"

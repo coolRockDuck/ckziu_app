@@ -28,7 +28,7 @@ import com.squareup.picasso.Picasso
  * */
 class NewsAdapter(
     private val activeNews: List<News>,
-    newsListFragment: NewsListFragment
+    newsListFragment: NewsListFragment // todo communicate via interface implemented in the fragment, not through the fragment itself
 ) : RecyclerView.Adapter<NewsAdapter.AbstractViewHolder>() {
 
     companion object {
